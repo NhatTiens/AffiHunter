@@ -1,0 +1,53 @@
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    border-color: rgb(var(--color-border-default));
+  }
+
+  html {
+    min-width: 80rem;
+    background: rgb(var(--color-surface-canvas));
+    font-family: var(--font-family-sans);
+    color: rgb(var(--color-content-primary));
+    letter-spacing: var(--letter-spacing-default);
+  }
+
+  body {
+    min-width: 80rem;
+    min-height: 100vh;
+    margin: 0;
+    background: rgb(var(--color-surface-canvas));
+    color: rgb(var(--color-content-primary));
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-sm);
+    letter-spacing: var(--letter-spacing-default);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    letter-spacing: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-focus-ring));
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
