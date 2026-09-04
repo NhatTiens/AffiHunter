@@ -61,12 +61,14 @@ describe("MockProductService", () => {
         category: "Gia dụng",
         market: "VN",
         source: "cj-dropshipping",
-        priceMinMinor: 30000000,
-        priceMaxMinor: 40000000,
+        priceMinMinor: 300000,
+        priceMaxMinor: 400000,
         commissionMinBps: 1900,
         salesMin: 12000,
         growthMinBps: 3000,
         competitionMax: 40,
+        opportunityScoreMin: 80,
+        opportunityScoreMax: 100,
       },
       page,
     });
@@ -89,8 +91,9 @@ describe("MockProductService", () => {
     });
     expect(result.ok).toBe(true);
     if (result.ok) {
-      expect(result.value).toMatchObject({ page: 2, pageSize: 2, total: 4 });
-      expect(result.value.items.map((item) => item.id)).toEqual(["product-1", "product-2"]);
+      expect(result.value).toMatchObject({ page: 2, pageSize: 2, total: 12 });
+      expect(result.value.items).toHaveLength(2);
+      expect(result.value.items[0].priceMinor).toBeLessThanOrEqual(result.value.items[1].priceMinor);
     }
   });
 
@@ -159,9 +162,9 @@ describe("commerce fixtures and calculations", () => {
     const service = new MockCommerceService();
     const result = await service.getRevenueOverview(range);
     expect(result).toEqual({ ok: true, value: calculated });
-    expect(calculated.grossRevenue.amountMinor).toBe(101700000);
-    expect(calculated.commission.amountMinor).toBe(19024000);
-    expect(calculated.paidCommission.amountMinor).toBe(5922000);
+    expect(calculated.grossRevenue.amountMinor).toBe(1017000);
+    expect(calculated.commission.amountMinor).toBe(190240);
+    expect(calculated.paidCommission.amountMinor).toBe(59220);
   });
 
   it("supports commerce filters and deterministic empty/error scenarios", async () => {

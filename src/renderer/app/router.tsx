@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { AppShell } from "../layouts/AppShell";
 import { NotFound } from "../layouts/NotFound";
 import { PlaceholderPage } from "../layouts/PlaceholderPage";
+import { ProductHunterPage } from "../features/products/ProductHunterPage";
 
 const pages = {
   dashboard: { title: "Tổng quan" },
@@ -36,7 +37,7 @@ export function AppRouter() {
       <Route element={<AppShell />}>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={page(pages.dashboard.title)} />
-        <Route path="/products/discover" element={page(pages.discover.title)} />
+        <Route path="/products/discover" element={<ProductHunterPage />} />
         <Route path="/products/saved" element={page(pages.saved.title)} />
         <Route path="/products/:productId/analysis" element={page(pages.analysis.title)} />
         <Route path="/content-lab/:productId?" element={page(pages.contentLab.title)} />

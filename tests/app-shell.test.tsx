@@ -4,11 +4,15 @@ import { MemoryRouter, useNavigate } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import { allNavigationItems } from "../src/renderer/app/navigation";
 import { AppRouter } from "../src/renderer/app/router";
+import { AppServicesProvider } from "../src/renderer/services/AppServicesProvider";
+import { mockAppServices } from "../src/renderer/services/mock/composition";
 
 function renderAt(path: string) {
   return render(
     <MemoryRouter initialEntries={[path]}>
-      <AppRouter />
+      <AppServicesProvider services={mockAppServices}>
+        <AppRouter />
+      </AppServicesProvider>
     </MemoryRouter>,
   );
 }
@@ -113,7 +117,9 @@ describe("AppShell navigation", () => {
     render(
       <MemoryRouter initialEntries={["/dashboard", "/revenue"]} initialIndex={1}>
         <HistoryControls />
-        <AppRouter />
+        <AppServicesProvider services={mockAppServices}>
+          <AppRouter />
+        </AppServicesProvider>
       </MemoryRouter>,
     );
 
@@ -171,7 +177,7 @@ describe("route boundaries", () => {
 describe("canonical route registry", () => {
   it.each([
     ["/dashboard", "Tổng quan"],
-    ["/products/discover", "Tìm sản phẩm"],
+    ["/products/discover", "Săn sản phẩm"],
     ["/products/saved", "Sản phẩm đã lưu"],
     ["/products/product-1/analysis", "Phân tích sản phẩm"],
     ["/content-lab", "Content Lab"],

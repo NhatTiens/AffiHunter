@@ -58,17 +58,25 @@ export type SavedProductStatus = "watching" | "testing" | "paused" | "tested" | 
 
 export interface Product {
   category: string;
+  commissionMinor?: number;
   commissionRateBps: number;
   competitionScore: number;
   currency: string;
   externalId: string;
   growthBps: number;
   id: ProductId;
+  imageUrl: string;
   market: Market;
+  creatorCount: number;
   priceMinor: number;
+  ratingTenths: number;
+  reviewCount: number;
   sales30d: number;
   source: ProductSource;
   title: string;
+  trendPoints: readonly number[];
+  videoCount: number;
+  opportunityScore?: number;
 }
 
 export interface ProductScore {
@@ -105,6 +113,8 @@ export interface ProductSearchFilters {
   competitionMax?: number;
   growthMinBps?: number;
   market?: Market;
+  opportunityScoreMax?: number;
+  opportunityScoreMin?: number;
   priceMaxMinor?: number;
   priceMinMinor?: number;
   query?: string;

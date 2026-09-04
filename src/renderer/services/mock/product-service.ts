@@ -73,7 +73,7 @@ export class MockProductService implements ProductService {
     if (!validPage.ok) return validPage;
     const products = this.availableProducts().filter((product) => this.matches(product, request.filters));
     const sorted = [...products].sort((left, right) => this.compare(left, right, request.sort));
-    return ok(paginate(sorted, request.page));
+    return ok(paginate(sorted.map((product) => this.toView(product)), request.page));
   }
 
   async getProductAnalysis(productId: ProductId, range: DateRange): Promise<Result<ProductAnalysis>> {
@@ -83,7 +83,7 @@ export class MockProductService implements ProductService {
     const product = this.products.find((item) => item.id === productId);
     if (!product) return fail("PRODUCT_NOT_FOUND", "Product was not found.");
     const snapshots = fixtureSnapshots.filter((snapshot) => snapshot.productId === productId && isInDateRange(snapshot.capturedAt, range));
-    return ok({ product: { ...product }, score: calculateOpportunityScore(product, FIXTURE_NOW), snapshots });
+    return ok({ product: this.toView(product), score: calculateOpportunityScore(product, FIXTURE_NOW), snapshots });
   }
 
   async saveProduct(productId: ProductId, input: SaveProductInput): Promise<Result<SavedProductRecord>> {
@@ -110,7 +110,7 @@ export class MockProductService implements ProductService {
     const views = this.products
       .filter((product) => this.saved.has(product.id) && this.matches(product, filters))
       .filter((product) => !filters.savedStatus || this.saved.get(product.id)?.status === filters.savedStatus)
-      .map((product) => ({ product: { ...product }, saved: { ...this.saved.get(product.id)!, collectionIds: [...this.saved.get(product.id)!.collectionIds] } }));
+      .map((product) => ({ product: this.toView(product), saved: { ...this.saved.get(product.id)!, collectionIds: [...this.saved.get(product.id)!.collectionIds] } }));
     return ok(paginate(views, page));
   }
 
@@ -156,7 +156,9 @@ export class MockProductService implements ProductService {
       (filters.commissionMinBps === undefined || product.commissionRateBps >= filters.commissionMinBps) &&
       (filters.salesMin === undefined || product.sales30d >= filters.salesMin) &&
       (filters.growthMinBps === undefined || product.growthBps >= filters.growthMinBps) &&
-      (filters.competitionMax === undefined || product.competitionScore <= filters.competitionMax);
+      (filters.competitionMax === undefined || product.competitionScore <= filters.competitionMax) &&
+      (filters.opportunityScoreMin === undefined || calculateOpportunityScore(product, FIXTURE_NOW).total >= filters.opportunityScoreMin) &&
+      (filters.opportunityScoreMax === undefined || calculateOpportunityScore(product, FIXTURE_NOW).total <= filters.opportunityScoreMax);
   }
 
   private compare(left: Product, right: Product, sort: ProductSearchRequest["sort"]): number {
@@ -164,5 +166,9 @@ export class MockProductService implements ProductService {
     const score = (product: Product) => key === "opportunity" ? calculateOpportunityScore(product, FIXTURE_NOW).total : key === "price" ? product.priceMinor : key === "commission" ? product.commissionRateBps : key === "sales" ? product.sales30d : key === "growth" ? product.growthBps : product.competitionScore;
     const result = score(left) - score(right);
     return (sort?.direction ?? "desc") === "asc" ? result : -result;
+  }
+
+  private toView(product: Product): Product {
+    return { ...product, commissionMinor: Math.round(product.priceMinor * product.commissionRateBps / 10000), opportunityScore: calculateOpportunityScore(product, FIXTURE_NOW).total, trendPoints: [...product.trendPoints] };
   }
 }
