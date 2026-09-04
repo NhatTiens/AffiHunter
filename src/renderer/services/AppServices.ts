@@ -1,5 +1,3 @@
-export interface AppServices {
-  health(): Promise<{ ok: true }>;
-}
-
-export const mockAppServices: AppServices = { health: async () => ({ ok: true }) };
+export { AppServicesProvider } from "./AppServicesProvider";
+export { useAppServices } from "./useAppServices";
+export type { AppServices } from "../../shared/contracts";

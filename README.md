@@ -13,7 +13,8 @@ The V1 product is deliberately single-user. Team management, roles, permissions,
 - Design Tokens: completed
 - Shared Component Library: completed
 - App Shell + Navigation: completed
-- Next checkpoint: AppServices + Mock Service Foundation
+- AppServices + Mock Service Foundation: completed
+- Next checkpoint: Product Hunter Frontend
 - Application code: scaffolded with shell-safe placeholder routes
 - Approved UI references: [`reference-ui`](reference-ui)
 
