@@ -3,6 +3,7 @@ import { AppShell } from "../layouts/AppShell";
 import { NotFound } from "../layouts/NotFound";
 import { PlaceholderPage } from "../layouts/PlaceholderPage";
 import { ProductHunterPage } from "../features/products/ProductHunterPage";
+import { ProductAnalysisPage } from "../features/products/ProductAnalysisPage";
 
 const pages = {
   dashboard: { title: "Tổng quan" },
@@ -39,7 +40,7 @@ export function AppRouter() {
         <Route path="/dashboard" element={page(pages.dashboard.title)} />
         <Route path="/products/discover" element={<ProductHunterPage />} />
         <Route path="/products/saved" element={page(pages.saved.title)} />
-        <Route path="/products/:productId/analysis" element={page(pages.analysis.title)} />
+        <Route path="/products/:productId/analysis" element={<ProductAnalysisPage />} />
         <Route path="/content-lab/:productId?" element={page(pages.contentLab.title)} />
         <Route path="/ideas" element={page(pages.ideas.title)} />
         <Route path="/scripts" element={page(pages.scripts.title)} />

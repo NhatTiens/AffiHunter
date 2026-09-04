@@ -102,9 +102,41 @@ export interface ProductSnapshot {
 }
 
 export interface ProductAnalysis {
+  competition: CompetitionBreakdown;
+  creators: readonly CreatorActivity[];
   product: Product;
+  riskFactors: readonly RiskFactor[];
   score: ProductScore;
   snapshots: readonly ProductSnapshot[];
+  trendGrowthBps: number;
+  videos: readonly VideoActivity[];
+}
+
+export interface CompetitionBreakdown {
+  relatedCreators: number;
+  relatedVideos: number;
+  score: number;
+}
+
+export interface CreatorActivity {
+  handle: string;
+  followers: number;
+  sales30d: number;
+  videoCount: number;
+}
+
+export interface VideoActivity {
+  id: Id<"VideoId">;
+  title: string;
+  views: number;
+  orders: number;
+  durationSeconds: number;
+}
+
+export interface RiskFactor {
+  label: string;
+  level: "low" | "medium" | "high";
+  detail: string;
 }
 
 export interface ProductSearchFilters {

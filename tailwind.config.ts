@@ -128,6 +128,9 @@ export default {
         copy: "var(--layout-copy-max-width)",
         search: "var(--layout-topbar-search-max-width)",
       },
+      borderWidth: {
+        score: "var(--layout-score-ring-width)",
+      },
       minWidth: {
         menu: "var(--layout-menu-min-width)",
       },

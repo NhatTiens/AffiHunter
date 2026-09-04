@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useNavigate } from "react-router-dom";
 import { describe, expect, it } from "vitest";
@@ -197,9 +197,9 @@ describe("canonical route registry", () => {
     ["/reports/videos/video-1", "Phân tích chi tiết video"],
     ["/notifications", "Thông báo"],
     ["/settings", "Cài đặt"],
-  ])("renders %s as %s", (path, title) => {
+  ])("renders %s as %s", async (path, title) => {
     renderAt(path);
-    expect(screen.getByRole("heading", { name: title })).toBeVisible();
+    await waitFor(() => expect(screen.getByRole("heading", { name: title })).toBeVisible());
     expect(screen.getByRole("navigation", { name: "Primary navigation" })).toBeVisible();
   });
 });

@@ -15,7 +15,8 @@ The V1 product is deliberately single-user. Team management, roles, permissions,
 - App Shell + Navigation: completed
 - AppServices + Mock Service Foundation: completed
 - Product Hunter Frontend: completed
-- Next checkpoint: Product Analysis Frontend
+- Product Analysis Frontend: completed
+- Next checkpoint: Saved Products Frontend
 - Application code: scaffolded with shell-safe placeholder routes
 - Approved UI references: [`reference-ui`](reference-ui)
 

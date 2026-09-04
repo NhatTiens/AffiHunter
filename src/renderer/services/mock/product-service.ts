@@ -83,7 +83,28 @@ export class MockProductService implements ProductService {
     const product = this.products.find((item) => item.id === productId);
     if (!product) return fail("PRODUCT_NOT_FOUND", "Product was not found.");
     const snapshots = fixtureSnapshots.filter((snapshot) => snapshot.productId === productId && isInDateRange(snapshot.capturedAt, range));
-    return ok({ product: this.toView(product), score: calculateOpportunityScore(product, FIXTURE_NOW), snapshots });
+    return ok({
+      product: this.toView(product),
+      score: calculateOpportunityScore(product, FIXTURE_NOW),
+      snapshots,
+      trendGrowthBps: snapshots.length > 1 ? Math.round(((snapshots.at(-1)?.sales30d ?? 0) / Math.max(1, snapshots[0].sales30d) - 1) * 10000) : 0,
+      competition: { score: product.competitionScore, relatedCreators: product.creatorCount, relatedVideos: product.videoCount },
+      creators: [
+        { handle: "@healthy.tips", followers: 256000, sales30d: Math.round(product.sales30d * 0.09), videoCount: 12 },
+        { handle: "@reviewthatthing", followers: 184000, sales30d: Math.round(product.sales30d * 0.065), videoCount: 8 },
+        { handle: "@giadungthongminh", followers: 122000, sales30d: Math.round(product.sales30d * 0.043), videoCount: 7 },
+      ],
+      videos: [
+        { id: "video-1" as ProductAnalysis["videos"][number]["id"], title: `${product.title} review thật`, views: 1800000, orders: 812, durationSeconds: 28 },
+        { id: "video-2" as ProductAnalysis["videos"][number]["id"], title: `Món đồ giúp giải quyết vấn đề`, views: 1200000, orders: 623, durationSeconds: 26 },
+        { id: "video-3" as ProductAnalysis["videos"][number]["id"], title: `POV: trải nghiệm sau 7 ngày`, views: 980000, orders: 451, durationSeconds: 27 },
+      ],
+      riskFactors: [
+        { label: "Khiếu nại sản phẩm", level: "low", detail: "Tỷ lệ khiếu nại thấp trong dữ liệu mock." },
+        { label: "Cạnh tranh", level: product.competitionScore > 65 ? "high" : product.competitionScore > 40 ? "medium" : "low", detail: "Dựa trên điểm cạnh tranh hiện tại." },
+        { label: "Chính sách nền tảng", level: "low", detail: "Chưa có cảnh báo chính sách trong dữ liệu mock." },
+      ],
+    });
   }
 
   async saveProduct(productId: ProductId, input: SaveProductInput): Promise<Result<SavedProductRecord>> {

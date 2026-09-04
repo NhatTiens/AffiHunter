@@ -91,6 +91,7 @@
   --layout-feedback-min-height: 10rem;
   --layout-dialog-max-width: 32rem;
   --layout-copy-max-width: 28rem;
+  --layout-score-ring-width: 0.625rem;
   --layout-menu-offset: 0.5rem;
   --layout-menu-min-width: 11rem;
 
