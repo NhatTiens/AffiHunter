@@ -8,12 +8,16 @@ The V1 product is deliberately single-user. Team management, roles, permissions,
 
 ## Current status
 
-- Current completed phase: Phase 1 - Plan and Architecture
-- Next allowed phase: Phase 2 - Project Foundation, Design System, and App Shell
-- Application code: not scaffolded yet
+- Plan & Architecture: completed
+- Project Scaffold: completed
+- Design Tokens: completed
+- Shared Component Library: completed
+- App Shell + Navigation: completed
+- Next checkpoint: AppServices + Mock Service Foundation
+- Application code: scaffolded with shell-safe placeholder routes
 - Approved UI references: [`reference-ui`](reference-ui)
 
-Phase 2 must only start after explicit approval. See [`docs/roadmap/implementation-plan.md`](docs/roadmap/implementation-plan.md) for the phased delivery plan.
+The next checkpoint must only start after explicit approval. See [`docs/roadmap/implementation-plan.md`](docs/roadmap/implementation-plan.md) for the phased delivery plan.
 
 ## Architecture documents
 
@@ -34,4 +38,3 @@ Phase 2 must only start after explicit approval. See [`docs/roadmap/implementati
 - MySQL 8.x, Drizzle ORM, mysql2
 - FFmpeg for media processing
 - Vitest, React Testing Library, and focused Playwright E2E coverage
-

@@ -1,7 +1,8 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, useNavigate } from "react-router-dom";
 import { describe, expect, it } from "vitest";
+import { allNavigationItems } from "../src/renderer/app/navigation";
 import { AppRouter } from "../src/renderer/app/router";
 
 function renderAt(path: string) {
@@ -9,6 +10,20 @@ function renderAt(path: string) {
     <MemoryRouter initialEntries={[path]}>
       <AppRouter />
     </MemoryRouter>,
+  );
+}
+
+function HistoryControls() {
+  const navigate = useNavigate();
+  return (
+    <div>
+      <button type="button" onClick={() => navigate(-1)}>
+        Browser back
+      </button>
+      <button type="button" onClick={() => navigate(1)}>
+        Browser forward
+      </button>
+    </div>
   );
 }
 
@@ -27,6 +42,11 @@ describe("AppShell navigation", () => {
       "aria-current",
       "page",
     );
+    expect(
+      within(
+        screen.getByRole("navigation", { name: "Primary navigation" }),
+      ).getAllByRole("link"),
+    ).toHaveLength(allNavigationItems.length);
   });
 
   it("updates active navigation after clicking a route link", async () => {
@@ -86,6 +106,22 @@ describe("AppShell navigation", () => {
       "aria-expanded",
       "true",
     );
+  });
+
+  it("preserves route rendering across browser back and forward history", async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter initialEntries={["/dashboard", "/revenue"]} initialIndex={1}>
+        <HistoryControls />
+        <AppRouter />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByRole("heading", { name: "Doanh thu" })).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Browser back" }));
+    expect(screen.getByRole("heading", { name: "Tổng quan" })).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Browser forward" }));
+    expect(screen.getByRole("heading", { name: "Doanh thu" })).toBeVisible();
   });
 
   it("exposes keyboard-accessible date and account menus", async () => {
