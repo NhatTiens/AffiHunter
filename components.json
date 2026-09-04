@@ -4,5 +4,5 @@
   "rsc": false,
   "tsx": true,
   "tailwind": { "config": "tailwind.config.ts", "css": "src/renderer/styles/index.css", "baseColor": "slate", "cssVariables": true, "prefix": "" },
-  "aliases": { "components": "@/renderer/components", "utils": "@/renderer/shared/utils" }
+  "aliases": { "components": "@/renderer/components", "utils": "@/renderer/components/ui/utils" }
 }

@@ -13,6 +13,7 @@ export default {
     },
     spacing: {
       0: "var(--space-0)",
+      0.5: "var(--space-0-5)",
       1: "var(--space-1)",
       2: "var(--space-2)",
       3: "var(--space-3)",
@@ -27,6 +28,9 @@ export default {
       gutter: "var(--layout-content-gutter)",
       "panel-gap": "var(--layout-panel-gap)",
       control: "var(--layout-control-height)",
+      textarea: "var(--layout-textarea-min-height)",
+      chart: "var(--layout-chart-height)",
+      feedback: "var(--layout-feedback-min-height)",
     },
     extend: {
       colors: {
@@ -115,6 +119,10 @@ export default {
         lg: ["var(--font-size-lg)", "var(--line-height-lg)"],
         xl: ["var(--font-size-xl)", "var(--line-height-xl)"],
         "2xl": ["var(--font-size-2xl)", "var(--line-height-2xl)"],
+      },
+      maxWidth: {
+        dialog: "var(--layout-dialog-max-width)",
+        copy: "var(--layout-copy-max-width)",
       },
       borderRadius: {
         xs: "var(--radius-xs)",
