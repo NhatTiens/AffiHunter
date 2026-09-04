@@ -14,6 +14,7 @@ export default {
     spacing: {
       0: "var(--space-0)",
       0.5: "var(--space-0-5)",
+      1.5: "var(--space-1-5)",
       1: "var(--space-1)",
       2: "var(--space-2)",
       3: "var(--space-3)",
@@ -24,6 +25,7 @@ export default {
       10: "var(--space-10)",
       12: "var(--space-12)",
       sidebar: "var(--layout-sidebar-width)",
+      "sidebar-collapsed": "var(--layout-sidebar-collapsed-width)",
       topbar: "var(--layout-topbar-height)",
       gutter: "var(--layout-content-gutter)",
       "panel-gap": "var(--layout-panel-gap)",
@@ -31,6 +33,7 @@ export default {
       textarea: "var(--layout-textarea-min-height)",
       chart: "var(--layout-chart-height)",
       feedback: "var(--layout-feedback-min-height)",
+      menu: "var(--layout-menu-offset)",
     },
     extend: {
       colors: {
@@ -123,6 +126,10 @@ export default {
       maxWidth: {
         dialog: "var(--layout-dialog-max-width)",
         copy: "var(--layout-copy-max-width)",
+        search: "var(--layout-topbar-search-max-width)",
+      },
+      minWidth: {
+        menu: "var(--layout-menu-min-width)",
       },
       borderRadius: {
         xs: "var(--radius-xs)",
